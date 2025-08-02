@@ -31,6 +31,7 @@
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid white;
+      cursor: pointer;
     }
 
     .dashboard-main {
@@ -83,14 +84,19 @@
   <nav class="navbar">
     <div>Student Dashboard</div>
     <div>
-      <img src="profile.png" alt="Profile" class="profile-icon" />
+      <!-- 🔗 Profile Icon Link -->
+      <a href="profile.html" title="View Profile">
+        <img src="assets/profile.jpg" alt="Profile" class="profile-icon" />
+      </a>
     </div>
   </nav>
 
   <!-- Hero Section -->
   <main class="dashboard-main">
     <h1>Welcome to Your Dashboard</h1>
-    <div class="welcome-message">Hello, <span id="studentNameHero">Student</span>! Ready to manage your academics?</div>
+    <div class="welcome-message">
+      Hello, <span id="studentNameHero">Student</span>! Ready to manage your academics?
+    </div>
     <div class="dashboard-buttons">
       <button onclick="goToPage('fee.html')">Check Fee</button>
       <button onclick="goToPage('attendance.html')">Attendance</button>
@@ -108,4 +114,5 @@
   </script>
 </body>
 </html>
+
 
