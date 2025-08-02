@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Attendance</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h2 { color: #333; }
+    .student-info { font-size: 18px; margin-bottom: 10px; }
+    video {
+      width: 320px;
+      height: 240px;
+      border: 4px solid #4caf50;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px;
+    }
+    button:hover { background-color: #388e3c; }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 80%;
+      max-width: 500px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    tr:last-child td { border-bottom: none; }
+  </style>
+</head>
+<body>
+  <h2>Attendance Marking</h2>
+  <div class="student-info">
+    Student: <span id="studentNameCell">Student</span>
+  </div>
+  <video id="video" autoplay></video>
+  <br>
+  <button onclick="markAttendance()">Mark Attendance</button>
+  <button onclick="exportCSV()">Export History as CSV</button>
+  <button onclick="window.location.href='std_dashboard.html'">← Back to Dashboard</button>
+
+  <h3>Attendance History</h3>
+  <table id="historyTable">
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+    </tr>
+    <!-- rows will be added by JS -->
+  </table>
+
+  <script>
+    // Show student name
+    const name = localStorage.getItem("studentName") || "Student";
+    document.getElementById("studentNameCell").textContent = name;
+
+    // Open camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => { document.getElementById('video').srcObject = stream; })
+      .catch(err => { console.error("Camera error:", err); });
+
+    // Load attendance history
+    let history = JSON.parse(localStorage.getItem("attendanceHistory") || "[]");
+    renderHistory();
+
+    function markAttendance() {
+      const today = new Date().toLocaleDateString();
+      // Avoid duplicate for same day
+      if (!history.some(item => item.date === today)) {
+        history.push({ date: today, status: "Present" });
+        localStorage.setItem("attendanceHistory", JSON.stringify(history));
+        renderHistory();
+        alert("Attendance marked!");
+      } else {
+        alert("Today's attendance already marked.");
+      }
+    }
+
+    function renderHistory() {
+      const table = document.getElementById("historyTable");
+      // Remove old rows except header
+      table.innerHTML = "<tr><th>Date</th><th>Status</th></tr>";
+      history.forEach(item => {
+        const row = table.insertRow(-1);
+        row.insertCell(0).textContent = item.date;
+        row.insertCell(1).textContent = item.status;
+      });
+    }
+
+    function exportCSV() {
+      if (history.length === 0) {
+        alert("No attendance history to export!");
+        return;
+      }
+      let csv = "Date,Status\n";
+      history.forEach(item => {
+        csv += `${item.date},${item.status}\n`;
+      });
+      // Create download link
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "attendance_history.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

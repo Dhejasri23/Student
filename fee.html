@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fees</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      margin: 0;
+      text-align: center;
+      padding: 40px;
+    }
+    h2 { color: #333; }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 300px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    tr:last-child td { border-bottom: none; }
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover { background-color: #388e3c; }
+  </style>
+</head>
+<body>
+  <h2>Fee Details</h2>
+  <table>
+    <tr><td>Student Name:</td><td id="studentNameCell">Student</td></tr>
+    <tr><td>Student ID:</td><td id="studentIdCell">-</td></tr>
+    <tr><td>Total Fees:</td><td>₹40,000</td></tr>
+    <tr><td>Amount Paid:</td><td>₹25,000</td></tr>
+    <tr><td>Balance:</td><td>₹15,000</td></tr>
+  </table>
+  <button onclick="window.location.href='std_dashboard.html'">← Back to Dashboard</button>
+
+  <script>
+    // read saved name and id from localStorage
+    const name = localStorage.getItem("studentName") || "Student";
+    const id = localStorage.getItem("studentId") || "-";
+
+    // set in table
+    document.getElementById("studentNameCell").textContent = name;
+    document.getElementById("studentIdCell").textContent = id;
+  </script>
+</body>
+</html>

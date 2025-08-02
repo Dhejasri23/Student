@@ -59,28 +59,32 @@
       <option value="admin">Admin</option>
     </select>
     <input type="text" id="userid" placeholder="Enter your ID">
+    <input type="text" id="username" placeholder="Enter your Name">
     <button onclick="login()">Login</button>
     <p id="login-status"></p>
   </div>
 
   <script>
     function login() {
-      const userid = document.getElementById('userid').value.trim();
-      const role = document.getElementById('role').value;
+    const userid = document.getElementById('userid').value.trim();
+    const username = document.getElementById('username').value.trim();
+    const role = document.getElementById('role').value;
 
-      if(userid === "") {
-        document.getElementById('login-status').innerText = "Please enter your ID";
-        return;
-      }
-
-      if(role === 'admin') {
-        window.location.href = 'admin_dashboard.html';
-      } else if(role === 'student') {
-        window.location.href = 'std_dashboard.html';
-      } else {
-        document.getElementById('login-status').innerText = "Invalid role selected";
-      }
+    if(userid === "" || username === "") {
+      document.getElementById('login-status').innerText = "Please enter both ID and Name";
+      return;
     }
+
+    if(role === 'admin') {
+      window.location.href = 'admin_dashboard.html';
+    } else if(role === 'student') {
+      localStorage.setItem("studentName", username);  // save real name
+      localStorage.setItem("studentId", userid);      // save ID
+      window.location.href = 'std_dashboard.html';
+    } else {
+      document.getElementById('login-status').innerText = "Invalid role selected";
+    }
+  }
   </script>
 </body>
 </html>
