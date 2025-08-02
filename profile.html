@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Profile</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e8f5e9, #f1f8e9);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background-color: #4caf50;
+      color: white;
+      padding: 20px 30px;
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .profile-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .profile-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #4caf50;
+      margin-bottom: 20px;
+    }
+
+    .profile-info {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .profile-info label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .profile-info input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .profile-info input:disabled {
+      background-color: #f0f0f0;
+      color: #555;
+    }
+
+    .button-group {
+      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .edit-btn, .logout-btn {
+      padding: 12px 24px;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .edit-btn {
+      background-color: #4caf50;
+    }
+
+    .edit-btn:hover {
+      background-color: #388e3c;
+    }
+
+    .logout-btn {
+      background-color: #f44336;
+    }
+
+    .logout-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    footer {
+      background-color: #4caf50;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    Student Profile
+  </nav>
+
+  <!-- Profile Section -->
+  <section class="profile-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Student Photo" class="profile-image" />
+
+
+    <div class="profile-info">
+      <label for="name">Name</label>
+      <input type="text" id="name" value="John Doe" disabled />
+
+      <label for="dept">Department</label>
+      <input type="text" id="dept" value="Information Technology" disabled />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" value="john@example.com" disabled />
+
+      <label for="address">Address</label>
+      <input type="text" id="address" value="123 College St" disabled />
+
+      <label for="mobile">Mobile Number</label>
+      <input type="tel" id="mobile" value="9876543210" disabled />
+
+      <label for="studentId">Student ID</label>
+      <input type="text" id="studentId" value="STD12345" disabled />
+    </div>
+
+    <div class="button-group">
+      <button class="edit-btn" id="editBtn">Edit</button>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Smart Student Portal
+  </footer>
+
+  <script>
+    const editBtn = document.getElementById('editBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    let isEditable = false;
+
+    editBtn.addEventListener('click', () => {
+      isEditable = !isEditable;
+
+      const fields = ['name', 'dept', 'email', 'address', 'mobile'];
+      fields.forEach(id => {
+        document.getElementById(id).disabled = !isEditable;
+      });
+
+      editBtn.textContent = isEditable ? 'Save' : 'Edit';
+
+      if (!isEditable) {
+        alert("Profile updated successfully!");
+        // Add fetch/POST request to backend here if needed
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem("studentName");
+      window.location.href = "index.html"; // redirect to login
+    });
+  </script>
+</body>
+</html>
