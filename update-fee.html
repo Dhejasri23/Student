@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Update Fee Details</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-primary: #16a34a;
+      --green-hover: #15803d;
+      --white: #ffffff;
+      --gray-light: #f3f4f6;
+      --text-dark: #1f2937;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--gray-light);
+      min-height: 100vh;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background-color: var(--green-primary);
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-title {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .sprofile-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      cursor: pointer;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      text-align: center;
+      color: var(--green-primary);
+    }
+
+    .form-container {
+      background-color: var(--white);
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .btn-update {
+      background-color: var(--green-primary);
+      color: var(--white);
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-update:hover {
+      background-color: var(--green-hover);
+    }
+
+    .message {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: green;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+   <nav class="navbar">
+    <div class="navbar-title">Admin Dashboard</div>
+    <a href="sprofile.html" title="View Profile">
+      <img src="assets/profile.jpg" alt="Profile" class="sprofile-icon" />
+    </a>
+  </nav>
+
+  <h2>Update Fee Details</h2>
+
+  <div class="form-container">
+    <form id="feeForm">
+      <label for="studentId">Student ID</label>
+      <input type="text" id="studentId" name="studentId" required />
+
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="totalFee">Total Fee</label>
+      <input type="number" id="totalFee" name="totalFee" required />
+
+      <label for="paidFee">Paid Amount</label>
+      <input type="number" id="paidFee" name="paidFee" required />
+
+      <label for="pendingFee">Pending Amount</label>
+      <input type="number" id="pendingFee" name="pendingFee" required />
+
+      <button type="submit" class="btn-update">Update</button>
+
+      <div class="message" id="successMessage"></div>
+    </form>
+  </div>
+
+  <!-- ✅ JavaScript for form submission -->
+  <script>
+    document.getElementById('feeForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const data = {
+        studentId: document.getElementById('studentId').value.trim(),
+        name: document.getElementById('name').value.trim(),
+        totalFee: document.getElementById('totalFee').value,
+        paidFee: document.getElementById('paidFee').value,
+        pendingFee: document.getElementById('pendingFee').value
+      };
+
+      fetch('/api/fees/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("Update failed");
+        return response.json();
+      })
+      .then(result => {
+        document.getElementById('successMessage').textContent = "Fee details updated successfully!";
+        document.getElementById('feeForm').reset();
+      })
+      .catch(error => {
+        document.getElementById('successMessage').textContent = "Something went wrong. Try again.";
+        document.getElementById('successMessage').style.color = "red";
+      });
+    });
+  </script>
+
+</body>
+</html>
+

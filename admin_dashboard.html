@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome for profile icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green-primary: #16a34a; /* Green-600 */
+      --green-hover: #15803d;   /* Green-700 */
+      --emerald: #059669;       /* Emerald-600 */
+      --emerald-hover: #047857;
+      --text-dark: #1f2937;
+      --text-muted: #4b5563;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--white);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--green-primary);
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-title {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .navbar i {
+      font-size: 2.2rem;
+    }
+
+    .sprofile-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .hero span {
+      color: var(--green-primary);
+    }
+
+    .subtext {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+    
+
+   .btn {
+  display: inline-block;
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--white);
+  transition: background-color 0.3s ease;
+}
+
+
+    .btn-attendance {
+      background-color: var(--green-primary);
+    }
+
+    .btn-attendance:hover {
+      background-color: var(--green-hover);
+    }
+
+    .btn-fees {
+      background-color: var(--emerald);
+    }
+
+    .btn-fees:hover {
+      background-color: var(--emerald-hover);
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .subtext {
+        font-size: 1rem;
+      }
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-title">Admin Dashboard</div>
+    <a href="sprofile.html" title="View Profile">
+      <img src="assets/profile.jpg" alt="Profile" class="sprofile-icon" />
+    </a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome, <span id="adminName">Admin</span></h1>
+    <p class="subtext">You're logged in to the college administration control panel.</p>
+   <div class="buttons">
+ <div class="buttons">
+  <a href="sattendance.html" class="btn btn-attendance">Attendance</a>
+  <a href="sfees.html" class="btn btn-attendance">Fees</a>
+  <a href="addprofile.html" class="btn btn-attendance">Add Student Profile</a>
+</div>
+
+</div>
+
+  </section>
+
+  <script>
+    const adminName = localStorage.getItem('adminName') || 'Admin Name';
+    document.getElementById('adminName').textContent = adminName;
+  </script>
+
+</body>
+</html>

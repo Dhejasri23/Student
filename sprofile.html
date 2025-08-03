@@ -34,7 +34,6 @@
       min-height: 100vh;
     }
 
-    /* Navbar */
     .navbar {
       background-color: var(--green);
       color: var(--bg);
@@ -53,7 +52,6 @@
       font-size: 2.2rem;
     }
 
-    /* Container */
     .profile-container {
       max-width: 600px;
       margin: 4rem auto;
@@ -149,63 +147,61 @@
     <div><i class="fas fa-user-circle"></i></div>
   </nav>
 
-  <!-- Profile Content -->
+  <!-- Profile Section -->
   <div class="profile-container">
     <div class="profile-header">
       <h2>Welcome, <span id="adminName">Admin</span></h2>
     </div>
-    <form>
-      <div class="form-group">
-        <label for="staffName">Staff Name</label>
-        <input type="text" id="staffName" value="John Doe" disabled>
-      </div>
-      <div class="form-group">
-        <label for="staffId">Staff ID</label>
-        <input type="text" id="staffId" value="ADM12345" disabled>
-      </div>
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="text" id="phone" value="9876543210" disabled>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" value="admin@example.com" disabled>
-      </div>
-      <div class="button-group">
-        <button type="button" class="edit-btn" id="editSaveBtn" onclick="toggleEdit()">Edit</button>
-        <button type="button" class="logout-btn" onclick="logout()">Logout</button>
-      </div>
-    </form>
+
+    <div class="form-group">
+      <label for="staffName">Staff Name</label>
+      <input type="text" id="staffName" value="John Doe" disabled>
+    </div>
+    <div class="form-group">
+      <label for="staffId">Staff ID</label>
+      <input type="text" id="staffId" value="ADM12345" disabled>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" value="9876543210" disabled>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" value="admin@example.com" disabled>
+    </div>
+
+    <div class="button-group">
+      <button type="button" class="edit-btn" id="editSaveBtn" onclick="toggleEdit()">Edit</button>
+      <button type="button" class="logout-btn" onclick="logout()">Logout</button>
+    </div>
   </div>
 
   <script>
-    // Set name dynamically
+    // Set admin name from localStorage
     const name = localStorage.getItem('adminName') || 'Admin';
     document.getElementById('adminName').textContent = name;
 
-    let isEditable = false;
+    let isEditing = false;
 
     function toggleEdit() {
-      const inputs = ['staffName', 'phone', 'email'];
-      const button = document.getElementById('editSaveBtn');
+      const fields = ['staffName', 'phone', 'email'];
+      const btn = document.getElementById('editSaveBtn');
 
-      if (!isEditable) {
-        // Enable editing
-        inputs.forEach(id => document.getElementById(id).disabled = false);
-        button.textContent = "Save";
-        isEditable = true;
+      if (!isEditing) {
+        fields.forEach(id => document.getElementById(id).disabled = false);
+        btn.textContent = 'Save';
+        isEditing = true;
       } else {
-        // Disable editing
-        inputs.forEach(id => document.getElementById(id).disabled = true);
-        button.textContent = "Edit";
-        isEditable = false;
-        alert("Changes saved!");
+        fields.forEach(id => document.getElementById(id).disabled = true);
+        btn.textContent = 'Edit';
+        isEditing = false;
+        alert('Changes saved!');
       }
     }
 
     function logout() {
       localStorage.removeItem('adminName');
-      window.location.href = "index.html";
+      window.location.href = 'index.html';
     }
   </script>
 

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Fees</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --green-primary: #16a34a;
+      --green-hover: #15803d;
+      --text-dark: #1f2937;
+      --white: #ffffff;
+      --gray-light: #f3f4f6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--gray-light);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--green-primary);
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-title {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .sprofile-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      cursor: pointer;
+    }
+
+    .container {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #16a34a;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0fdf4;
+      color: #065f46;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .button-container {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .btn-update {
+      display: inline-block;
+      background-color: var(--green-primary);
+      color: var(--white);
+      padding: 0.8rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-update:hover {
+      background-color: var(--green-hover);
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+
+      td {
+        padding: 10px;
+        border: none;
+        border-bottom: 1px solid #eee;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 6px;
+        color: #111827;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-title">Admin Dashboard</div>
+    <a href="sprofile.html" title="View Profile">
+      <img src="assets/profile.jpg" alt="Profile" class="sprofile-icon" />
+    </a>
+  </nav>
+
+  <!-- Content -->
+  <div class="container">
+    <h2>Student Fee Details</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Fee Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Sample Data -->
+        <tr>
+          <td>STU001</td>
+          <td>John Doe</td>
+          <td>IT</td>
+          <td>₹50,000</td>
+          <td>Paid</td>
+        </tr>
+        <tr>
+          <td>STU002</td>
+          <td>Jane Smith</td>
+          <td>CSE</td>
+          <td>₹50,000</td>
+          <td>Pending</td>
+        </tr>
+        <tr>
+          <td>STU003</td>
+          <td>Michael Johnson</td>
+          <td>EEE</td>
+          <td>₹50,000</td>
+          <td>Paid</td>
+        </tr>
+        <!-- Add more rows or generate dynamically -->
+      </tbody>
+    </table>
+
+    <!-- Update Fee Button -->
+    <div class="button-container">
+      <a href="update-fee.html" class="btn-update">Update Fee Details</a>
+    </div>
+  </div>
+
+</body>
+</html>
