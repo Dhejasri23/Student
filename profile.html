@@ -2,169 +2,167 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student Profile</title>
+  <title>Admin Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font Awesome for icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --green: #16a34a;
+      --green-hover: #15803d;
+      --gray: #6b7280;
+      --bg: #ffffff;
+      --text: #1f2937;
+      --light-gray: #f3f4f6;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #e8f5e9, #f1f8e9);
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
     }
     .navbar {
-      background-color: #4caf50;
-      color: white;
-      padding: 20px 30px;
-      font-size: 24px;
-      font-weight: bold;
+      background-color: var(--green);
+      color: var(--bg);
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
+      padding: 1.2rem 2rem;
     }
+    .navbar-title { font-size: 1.8rem; font-weight: 600; }
     .profile-container {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-    }
-    .profile-image {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #4caf50;
-      margin-bottom: 20px;
-    }
-    .profile-info {
-      width: 100%;
       max-width: 500px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--light-gray);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    .profile-info label {
-      font-weight: bold;
-      color: #333;
+    .profile-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
     }
-    .profile-info input {
-      padding: 10px;
+    .profile-header h2 { color: var(--green); }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.3rem; font-weight: 500; }
+    input {
+      width: 100%;
+      padding: 0.7rem;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
+      border-radius: 6px;
+      font-size: 1rem;
     }
-    .profile-info input:disabled {
-      background-color: #f0f0f0;
-      color: #555;
-    }
+    input:disabled { background-color: #e5e7eb; cursor: not-allowed; }
     .button-group {
-      margin-top: 30px;
       display: flex;
-      gap: 20px;
+      justify-content: space-between;
+      margin-top: 1.5rem;
     }
-    .edit-btn, .logout-btn {
-      padding: 12px 24px;
+    button {
+      padding: 0.8rem 1.5rem;
       border: none;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
+      border-radius: 6px;
+      font-size: 1rem;
       color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-    .edit-btn { background-color: #4caf50; }
-    .edit-btn:hover { background-color: #388e3c; }
-    .logout-btn { background-color: #f44336; }
-    .logout-btn:hover { background-color: #d32f2f; }
+    .edit-btn { background-color: var(--green); }
+    .edit-btn:hover { background-color: var(--green-hover); }
+    .logout-btn { background-color: #ef4444; }
+    .logout-btn:hover { background-color: #dc2626; }
     footer {
-      background-color: #4caf50;
+      background-color: var(--green);
       color: white;
       text-align: center;
-      padding: 10px 0;
+      padding: 0.8rem 0;
     }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar">Student Profile</nav>
+  <nav class="navbar">
+    <div class="navbar-title">Admin Profile</div>
+    <div><i class="fas fa-user-circle"></i></div>
+  </nav>
 
-  <!-- Profile Section -->
+  <!-- Profile section -->
   <section class="profile-container">
-    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Student Photo" class="profile-image" />
-
-    <div class="profile-info">
-      <label for="name">Name</label>
-      <input type="text" id="name" disabled />
-
-      <label for="dept">Department</label>
-      <input type="text" id="dept" placeholder="Enter department" disabled />
-
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter email" disabled />
-
-      <label for="address">Address</label>
-      <input type="text" id="address" placeholder="Enter address" disabled />
-
-      <label for="mobile">Mobile Number</label>
-      <input type="tel" id="mobile" placeholder="Enter mobile number" disabled />
-
-      <label for="studentId">Student ID</label>
-      <input type="text" id="studentId" disabled />
+    <div class="profile-header">
+      <h2>Welcome, <span id="adminName">Admin</span></h2>
     </div>
-
-    <div class="button-group">
-      <button class="edit-btn" id="editBtn">Edit</button>
-      <button class="logout-btn" id="logoutBtn">Logout</button>
-    </div>
+    <form>
+      <div class="form-group">
+        <label for="staffName">Staff Name</label>
+        <input type="text" id="staffName" value="John Doe" disabled>
+      </div>
+      <div class="form-group">
+        <label for="staffId">Staff ID</label>
+        <input type="text" id="staffId" value="ADM12345" disabled>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" value="9876543210" disabled>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" value="admin@example.com" disabled>
+      </div>
+      <div class="button-group">
+        <button type="button" class="edit-btn" id="editSaveBtn">Edit</button>
+        <button type="button" class="logout-btn" id="logoutBtn">Logout</button>
+      </div>
+    </form>
   </section>
 
   <footer>&copy; 2025 Smart Student Portal</footer>
 
   <script>
-    const editBtn = document.getElementById('editBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
+    // Set admin name from localStorage or default
+    document.getElementById('adminName').textContent = localStorage.getItem('adminName') || 'Admin';
+
     let isEditable = false;
 
-    // Get student name and ID from login (localStorage)
-    document.getElementById('name').value = localStorage.getItem("studentName") || "Student";
-    document.getElementById('studentId').value = localStorage.getItem("studentId") || "ID123";
-
-    // Also load saved profile data if exists
-    const savedProfile = JSON.parse(localStorage.getItem("studentProfile") || "{}");
-    if(savedProfile.dept) document.getElementById('dept').value = savedProfile.dept;
-    if(savedProfile.email) document.getElementById('email').value = savedProfile.email;
-    if(savedProfile.address) document.getElementById('address').value = savedProfile.address;
-    if(savedProfile.mobile) document.getElementById('mobile').value = savedProfile.mobile;
-
-    editBtn.addEventListener('click', () => {
-      isEditable = !isEditable;
-
-      const fields = ['dept', 'email', 'address', 'mobile'];
-      fields.forEach(id => {
-        document.getElementById(id).disabled = !isEditable;
-      });
-
-      editBtn.textContent = isEditable ? 'Save' : 'Edit';
-
+    document.getElementById('editSaveBtn').addEventListener('click', function() {
+      const inputs = ['staffName', 'phone', 'email'];
       if (!isEditable) {
-        // Save updated data to localStorage
-        const updatedProfile = {
-          dept: document.getElementById('dept').value,
-          email: document.getElementById('email').value,
-          address: document.getElementById('address').value,
-          mobile: document.getElementById('mobile').value
-        };
-        localStorage.setItem("studentProfile", JSON.stringify(updatedProfile));
-        alert("Profile updated successfully!");
+        // Enable editing
+        inputs.forEach(id => document.getElementById(id).disabled = false);
+        this.textContent = "Save";
+        isEditable = true;
+      } else {
+        // Disable editing & save to localStorage
+        inputs.forEach(id => document.getElementById(id).disabled = true);
+        localStorage.setItem('adminProfile', JSON.stringify({
+          staffName: document.getElementById('staffName').value,
+          staffId: document.getElementById('staffId').value,
+          phone: document.getElementById('phone').value,
+          email: document.getElementById('email').value
+        }));
+        alert("Profile updated!");
+        this.textContent = "Edit";
+        isEditable = false;
       }
     });
 
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem("studentName");
-      localStorage.removeItem("studentId");
-      window.location.href = "index.html";
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('adminName');
+      localStorage.removeItem('adminProfile');
+      window.location.href = 'index.html';
     });
+
+    // Load saved profile on page load
+    const saved = JSON.parse(localStorage.getItem('adminProfile') || '{}');
+    if (saved.staffName) document.getElementById('staffName').value = saved.staffName;
+    if (saved.staffId) document.getElementById('staffId').value = saved.staffId;
+    if (saved.phone) document.getElementById('phone').value = saved.phone;
+    if (saved.email) document.getElementById('email').value = saved.email;
   </script>
 </body>
 </html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #16a34a;
+      --green-hover: #15803d;
+      --gray: #6b7280;
+      --bg: #ffffff;
+      --text: #1f2937;
+      --light-gray: #f3f4f6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background-color: var(--green);
+      color: var(--bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+    }
+
+    .navbar-title {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .navbar i {
+      font-size: 2.2rem;
+    }
+
+    .profile-container {
+      max-width: 600px;
+      margin: 4rem auto;
+      background-color: var(--light-gray);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile-header h2 {
+      font-size: 2rem;
+      color: var(--green);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    input:disabled {
+      background-color: #e5e7eb;
+      cursor: not-allowed;
+    }
+
+    .button-group {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button {
+      padding: 0.8rem 1.8rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .edit-btn {
+      background-color: var(--green);
+    }
+
+    .edit-btn:hover {
+      background-color: var(--green-hover);
+    }
+
+    .logout-btn {
+      background-color: #ef4444;
+    }
+
+    .logout-btn:hover {
+      background-color: #dc2626;
+    }
+
+    @media (max-width: 640px) {
+      .button-group {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .profile-container {
+        margin: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-title">Admin Profile</div>
+    <div><i class="fas fa-user-circle"></i></div>
+  </nav>
+
+  <!-- Profile Section -->
+  <div class="profile-container">
+    <div class="profile-header">
+      <h2>Welcome, <span id="adminName">Admin</span></h2>
+    </div>
+
+    <div class="form-group">
+      <label for="staffName">Staff Name</label>
+      <input type="text" id="staffName" value="John Doe" disabled>
+    </div>
+    <div class="form-group">
+      <label for="staffId">Staff ID</label>
+      <input type="text" id="staffId" value="ADM12345" disabled>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" value="9876543210" disabled>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" value="admin@example.com" disabled>
+    </div>
+
+    <div class="button-group">
+      <button type="button" class="edit-btn" id="editSaveBtn" onclick="toggleEdit()">Edit</button>
+      <button type="button" class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    // Set admin name from localStorage
+    const name = localStorage.getItem('adminName') || 'Admin';
+    document.getElementById('adminName').textContent = name;
+
+    let isEditing = false;
+
+    function toggleEdit() {
+      const fields = ['staffName', 'phone', 'email'];
+      const btn = document.getElementById('editSaveBtn');
+
+      if (!isEditing) {
+        fields.forEach(id => document.getElementById(id).disabled = false);
+        btn.textContent = 'Save';
+        isEditing = true;
+      } else {
+        fields.forEach(id => document.getElementById(id).disabled = true);
+        btn.textContent = 'Edit';
+        isEditing = false;
+        alert('Changes saved!');
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('adminName');
+      window.location.href = 'index.html';
+    }
+  </script>
+
+</body>
+</html>
+
