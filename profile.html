@@ -13,7 +13,6 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
     .navbar {
       background-color: #4caf50;
       color: white;
@@ -24,7 +23,6 @@
       justify-content: flex-start;
       align-items: center;
     }
-
     .profile-container {
       flex: 1;
       display: flex;
@@ -32,7 +30,6 @@
       align-items: center;
       padding: 40px 20px;
     }
-
     .profile-image {
       width: 120px;
       height: 120px;
@@ -41,7 +38,6 @@
       border: 4px solid #4caf50;
       margin-bottom: 20px;
     }
-
     .profile-info {
       width: 100%;
       max-width: 500px;
@@ -49,30 +45,25 @@
       flex-direction: column;
       gap: 15px;
     }
-
     .profile-info label {
       font-weight: bold;
       color: #333;
     }
-
     .profile-info input {
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
     }
-
     .profile-info input:disabled {
       background-color: #f0f0f0;
       color: #555;
     }
-
     .button-group {
       margin-top: 30px;
       display: flex;
       gap: 20px;
     }
-
     .edit-btn, .logout-btn {
       padding: 12px 24px;
       border: none;
@@ -81,23 +72,10 @@
       cursor: pointer;
       color: white;
     }
-
-    .edit-btn {
-      background-color: #4caf50;
-    }
-
-    .edit-btn:hover {
-      background-color: #388e3c;
-    }
-
-    .logout-btn {
-      background-color: #f44336;
-    }
-
-    .logout-btn:hover {
-      background-color: #d32f2f;
-    }
-
+    .edit-btn { background-color: #4caf50; }
+    .edit-btn:hover { background-color: #388e3c; }
+    .logout-btn { background-color: #f44336; }
+    .logout-btn:hover { background-color: #d32f2f; }
     footer {
       background-color: #4caf50;
       color: white;
@@ -109,33 +87,30 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar">
-    Student Profile
-  </nav>
+  <nav class="navbar">Student Profile</nav>
 
   <!-- Profile Section -->
   <section class="profile-container">
     <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Student Photo" class="profile-image" />
 
-
     <div class="profile-info">
       <label for="name">Name</label>
-      <input type="text" id="name" value="John Doe" disabled />
+      <input type="text" id="name" disabled />
 
       <label for="dept">Department</label>
-      <input type="text" id="dept" value="Information Technology" disabled />
+      <input type="text" id="dept" placeholder="Enter department" disabled />
 
       <label for="email">Email</label>
-      <input type="email" id="email" value="john@example.com" disabled />
+      <input type="email" id="email" placeholder="Enter email" disabled />
 
       <label for="address">Address</label>
-      <input type="text" id="address" value="123 College St" disabled />
+      <input type="text" id="address" placeholder="Enter address" disabled />
 
       <label for="mobile">Mobile Number</label>
-      <input type="tel" id="mobile" value="9876543210" disabled />
+      <input type="tel" id="mobile" placeholder="Enter mobile number" disabled />
 
       <label for="studentId">Student ID</label>
-      <input type="text" id="studentId" value="STD12345" disabled />
+      <input type="text" id="studentId" disabled />
     </div>
 
     <div class="button-group">
@@ -144,19 +119,28 @@
     </div>
   </section>
 
-  <footer>
-    &copy; 2025 Smart Student Portal
-  </footer>
+  <footer>&copy; 2025 Smart Student Portal</footer>
 
   <script>
     const editBtn = document.getElementById('editBtn');
     const logoutBtn = document.getElementById('logoutBtn');
     let isEditable = false;
 
+    // Get student name and ID from login (localStorage)
+    document.getElementById('name').value = localStorage.getItem("studentName") || "Student";
+    document.getElementById('studentId').value = localStorage.getItem("studentId") || "ID123";
+
+    // Also load saved profile data if exists
+    const savedProfile = JSON.parse(localStorage.getItem("studentProfile") || "{}");
+    if(savedProfile.dept) document.getElementById('dept').value = savedProfile.dept;
+    if(savedProfile.email) document.getElementById('email').value = savedProfile.email;
+    if(savedProfile.address) document.getElementById('address').value = savedProfile.address;
+    if(savedProfile.mobile) document.getElementById('mobile').value = savedProfile.mobile;
+
     editBtn.addEventListener('click', () => {
       isEditable = !isEditable;
 
-      const fields = ['name', 'dept', 'email', 'address', 'mobile'];
+      const fields = ['dept', 'email', 'address', 'mobile'];
       fields.forEach(id => {
         document.getElementById(id).disabled = !isEditable;
       });
@@ -164,14 +148,22 @@
       editBtn.textContent = isEditable ? 'Save' : 'Edit';
 
       if (!isEditable) {
+        // Save updated data to localStorage
+        const updatedProfile = {
+          dept: document.getElementById('dept').value,
+          email: document.getElementById('email').value,
+          address: document.getElementById('address').value,
+          mobile: document.getElementById('mobile').value
+        };
+        localStorage.setItem("studentProfile", JSON.stringify(updatedProfile));
         alert("Profile updated successfully!");
-        // Add fetch/POST request to backend here if needed
       }
     });
 
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem("studentName");
-      window.location.href = "index.html"; // redirect to login
+      localStorage.removeItem("studentId");
+      window.location.href = "index.html";
     });
   </script>
 </body>
