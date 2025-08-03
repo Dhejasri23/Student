@@ -44,20 +44,32 @@
   <table>
     <tr><td>Student Name:</td><td id="studentNameCell">Student</td></tr>
     <tr><td>Student ID:</td><td id="studentIdCell">-</td></tr>
-    <tr><td>Total Fees:</td><td>₹40,000</td></tr>
-    <tr><td>Amount Paid:</td><td>₹25,000</td></tr>
-    <tr><td>Balance:</td><td>₹15,000</td></tr>
+   <tr><td>Total Fees:</td><td id="totalFees">Loading...</td></tr>
+<tr><td>Amount Paid:</td><td id="paidAmount">Loading...</td></tr>
+<tr><td>Balance:</td><td id="balance">Loading...</td></tr>
+
   </table>
   <button onclick="window.location.href='std_dashboard.html'">← Back to Dashboard</button>
 
   <script>
-    // read saved name and id from localStorage
-    const name = localStorage.getItem("studentName") || "Student";
-    const id = localStorage.getItem("studentId") || "-";
+const name = localStorage.getItem("studentName") || "Student";
+const id = localStorage.getItem("studentId") || "-";
+document.getElementById("studentNameCell").textContent = name;
+document.getElementById("studentIdCell").textContent = id;
 
-    // set in table
-    document.getElementById("studentNameCell").textContent = name;
-    document.getElementById("studentIdCell").textContent = id;
-  </script>
+// Fetch fee data from backend
+fetch(`http://localhost:8080/api/fees/${id}`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("totalFees").textContent = `₹${data.totalAmount}`;
+    document.getElementById("paidAmount").textContent = `₹${data.paidAmount}`;
+    document.getElementById("balance").textContent = `₹${data.balance}`;
+  })
+  .catch(err => {
+    console.error("Failed to fetch fees:", err);
+    alert("Could not load fees data");
+  });
+</script>
+
 </body>
 </html>

@@ -68,63 +68,66 @@
   </table>
 
   <script>
-    // Show student name
-    const name = localStorage.getItem("studentName") || "Student";
-    document.getElementById("studentNameCell").textContent = name;
+const studentId = localStorage.getItem("studentId");
+const name = localStorage.getItem("studentName") || "Student";
+document.getElementById("studentNameCell").textContent = name;
 
-    // Open camera
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => { document.getElementById('video').srcObject = stream; })
-      .catch(err => { console.error("Camera error:", err); });
+navigator.mediaDevices.getUserMedia({ video: true })
+  .then(stream => { document.getElementById('video').srcObject = stream; })
+  .catch(err => console.error("Camera error:", err));
 
-    // Load attendance history
-    let history = JSON.parse(localStorage.getItem("attendanceHistory") || "[]");
-    renderHistory();
+// Fetch attendance history from backend
+let history = [];
+fetch(`http://localhost:8080/api/attendance/${studentId}`)
+  .then(res => res.json())
+  .then(data => { history = data; renderHistory(); })
+  .catch(err => console.error("Failed to fetch history:", err));
 
-    function markAttendance() {
-      const today = new Date().toLocaleDateString();
-      // Avoid duplicate for same day
-      if (!history.some(item => item.date === today)) {
-        history.push({ date: today, status: "Present" });
-        localStorage.setItem("attendanceHistory", JSON.stringify(history));
-        renderHistory();
-        alert("Attendance marked!");
-      } else {
-        alert("Today's attendance already marked.");
-      }
-    }
+function markAttendance() {
+  const today = new Date().toISOString().split('T')[0];
+  if (!history.some(item => item.date === today)) {
+    const newRecord = { date: today, status: "Present" };
+    // Save to backend
+    fetch('http://localhost:8080/api/attendance', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ studentId, date: today, status: "Present" })
+    }).then(() => {
+      history.push(newRecord);
+      renderHistory();
+      alert("Attendance marked!");
+    }).catch(err => {
+      console.error("Failed to save attendance:", err);
+      alert("Error saving attendance");
+    });
+  } else {
+    alert("Today's attendance already marked.");
+  }
+}
 
-    function renderHistory() {
-      const table = document.getElementById("historyTable");
-      // Remove old rows except header
-      table.innerHTML = "<tr><th>Date</th><th>Status</th></tr>";
-      history.forEach(item => {
-        const row = table.insertRow(-1);
-        row.insertCell(0).textContent = item.date;
-        row.insertCell(1).textContent = item.status;
-      });
-    }
+function renderHistory() {
+  const table = document.getElementById("historyTable");
+  table.innerHTML = "<tr><th>Date</th><th>Status</th></tr>";
+  history.forEach(item => {
+    const row = table.insertRow(-1);
+    row.insertCell(0).textContent = item.date;
+    row.insertCell(1).textContent = item.status;
+  });
+}
 
-    function exportCSV() {
-      if (history.length === 0) {
-        alert("No attendance history to export!");
-        return;
-      }
-      let csv = "Date,Status\n";
-      history.forEach(item => {
-        csv += `${item.date},${item.status}\n`;
-      });
-      // Create download link
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "attendance_history.csv";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-  </script>
+function exportCSV() {
+  if (history.length === 0) { alert("No history to export!"); return; }
+  let csv = "Date,Status\n";
+  history.forEach(item => { csv += `${item.date},${item.status}\n`; });
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "attendance_history.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
 </body>
 </html>
