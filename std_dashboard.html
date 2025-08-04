@@ -107,7 +107,7 @@
   </main>
 
   <script>
-    // Show name from localStorage immediately (quick UI feedback)
+    /*// Show name from localStorage immediately (quick UI feedback)
     const studentName = localStorage.getItem("studentName") || "Student";
     document.getElementById("studentNameHero").textContent = studentName;
 
@@ -133,7 +133,34 @@
           })
           .catch(err => console.error("Error fetching student data:", err));
       }
-    });
+    });*/
+    
+  const studentName = localStorage.getItem("studentName") || "Student";
+  document.getElementById("studentNameHero").textContent = studentName;
+
+  function goToPage(page) {
+    window.location.href = page;
+  }
+
+  function logout() {
+    localStorage.removeItem("studentName");
+    localStorage.removeItem("studentId");
+    window.location.href = 'index.html';
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const studentId = localStorage.getItem("studentId");
+    if (studentId) {
+      fetch(`http://localhost:8080/api/students/${studentId}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("studentNameHero").textContent = data.name;
+        })
+        .catch(err => console.error("Error fetching student data:", err));
+    }
+  });
+</script>
+
 </script>
 
 </body>
