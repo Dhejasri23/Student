@@ -50,9 +50,12 @@
 
   </table>
   <button onclick="window.location.href='std_dashboard.html'">← Back to Dashboard</button>
+<p>Total: <span id="totalFee"></span></p>
+<p>Paid: <span id="paidFee"></span></p>
+<p>Pending: <span id="pendingFee"></span></p>
 
   <script>
-const name = localStorage.getItem("studentName") || "Student";
+/*const name = localStorage.getItem("studentName") || "Student";
 const id = localStorage.getItem("studentId") || "-";
 document.getElementById("studentNameCell").textContent = name;
 document.getElementById("studentIdCell").textContent = id;
@@ -68,7 +71,16 @@ fetch(`http://localhost:8080/api/fees/${id}`)
   .catch(err => {
     console.error("Failed to fetch fees:", err);
     alert("Could not load fees data");
+  });*/
+  const studentId = 'STU001'; // Get dynamically later if you use login
+fetch(`http://localhost:8080/api/fees/${studentId}`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('totalFee').textContent = data.totalFee;
+    document.getElementById('paidFee').textContent = data.paidFee;
+    document.getElementById('pendingFee').textContent = data.pendingFee;
   });
+
 </script>
 
 </body>
