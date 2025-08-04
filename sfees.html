@@ -152,48 +152,33 @@
   <!-- Content -->
   <div class="container">
     <h2>Student Fee Details</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Student ID</th>
-          <th>Name</th>
-          <th>Department</th>
-          <th>Fee Amount</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Sample Data -->
-        <tr>
-          <td>STU001</td>
-          <td>John Doe</td>
-          <td>IT</td>
-          <td>₹50,000</td>
-          <td>Paid</td>
-        </tr>
-        <tr>
-          <td>STU002</td>
-          <td>Jane Smith</td>
-          <td>CSE</td>
-          <td>₹50,000</td>
-          <td>Pending</td>
-        </tr>
-        <tr>
-          <td>STU003</td>
-          <td>Michael Johnson</td>
-          <td>EEE</td>
-          <td>₹50,000</td>
-          <td>Paid</td>
-        </tr>
-        <!-- Add more rows or generate dynamically -->
-      </tbody>
-    </table>
+    <table id="adminFeesTable">
+  <tr><th>Student ID</th><th>Name</th><th>Total</th><th>Paid</th><th>Pending</th></tr>
+</table>
+
 
     <!-- Update Fee Button -->
     <div class="button-container">
       <a href="update-fee.html" class="btn-update">Update Fee Details</a>
     </div>
   </div>
+  <script>
+  fetch("http://localhost:8080/api/fees")
+    .then(res => res.json())
+    .then(data => {
+      const table = document.getElementById("adminFeesTable");
+      data.forEach(item => {
+        const row = table.insertRow();
+        row.insertCell().textContent = item.studentId;
+        row.insertCell().textContent = item.name;
+        row.insertCell().textContent = item.totalFee;
+        row.insertCell().textContent = item.paidFee;
+        row.insertCell().textContent = item.pendingFee;
+      });
+    })
+    .catch(err => console.error("Error fetching fees:", err));
+</script>
+
 
 </body>
 </html>

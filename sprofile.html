@@ -175,9 +175,11 @@
       <button type="button" class="logout-btn" onclick="logout()">Logout</button>
     </div>
   </div>
+  <div id="adminProfileList"></div>
+
 
   <script>
-    // Set admin name from localStorage
+    /*// Set admin name from localStorage
     const name = localStorage.getItem('adminName') || 'Admin';
     document.getElementById('adminName').textContent = name;
 
@@ -197,8 +199,21 @@
         isEditing = false;
         alert('Changes saved!');
       }
-    }
-
+    }*/
+fetch("http://localhost:8080/api/admins")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("adminProfileList");
+      data.forEach(admin => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <h3>${admin.username}</h3>
+          <p>Email: ${admin.email}</p>
+          <p>Phone: ${admin.phone}</p>
+        `;
+        container.appendChild(div);
+      });
+    })
     function logout() {
       localStorage.removeItem('adminName');
       window.location.href = 'index.html';
